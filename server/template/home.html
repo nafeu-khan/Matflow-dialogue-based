@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+  <title>Chatbot Interface</title>
+  <link rel="stylesheet"  href= "{% static 'css/styles.css' %}" >
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-header">
+      <h2>Matflow</h2>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+<!-- Chat messages will be dynamically added here -->
+    </div>
+    <div class="prompt_wrap">
+        <span class="prompt-buttons">
+            <button></button>
+        </span>
+    </div>
+    <input type="file" name="csv">
+    <div class="chat-input">
+      <input type="text" id="userInput" placeholder="Type a message...">
+      <button  id="sendButton">Send</button>
+    </div>
+  </div>
+
+  <script src="{% static 'js/scripts.js' %}"></script>
+</body>
+</html>
