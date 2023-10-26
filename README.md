@@ -2,7 +2,6 @@ Here is a sample README file for a Django project that receives API requests and
 
 # Project Name
 ## Matflow dialogue based
-This is a Django project that receives API requests and sends responses.
 
 ## Getting Started
 
