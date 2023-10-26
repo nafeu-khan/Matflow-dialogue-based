@@ -25,9 +25,9 @@ cd server
    python manage.py runserver
    ```
 ### for client/frontend
-    ```
-    cd client
-    ```
+```
+cd client
+```
 1. Install the required packages:
    ```
    npm install
