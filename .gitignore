@@ -23,5 +23,5 @@ client/*.njsproj
 client/*.sln
 client/*.sw?
 
-
+.idea
 server/.idea

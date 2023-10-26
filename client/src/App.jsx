@@ -17,9 +17,9 @@ import {
 import TTS from "./components/TTS";
 
 function App() {
-  const [botText, setbotText] = useState("hello");
+  const [botText, setbotText] = useState("");
   const [islistening, setislistening] = useState(true);
-  const [userText, setUserText] = useState("hi");
+  const [userText, setUserText] = useState("");
   const [textToCopy, setTextToCopy] = useState();
   const [isCopied, setCopied] = useClipboard(textToCopy, {
     successDuration: 1000,
@@ -146,12 +146,12 @@ function App() {
         </div>
         <div className="prompt_wrap">
           <span className="prompt-buttons">
-            <button></button>
+            {/* <button></button> */}
           </span>
         </div>
         <input type="file" name="csv" onChange={handleFileUpload} />
         <div className="chat-input">
-          <input type="text" id="userInput" placeholder="Type a message..." />
+          <input type="text" id="userInput" value={userText} placeholder="Type a message..." />
           <button id="sendButton" onClick={handleSend}>
             Send
           </button>
