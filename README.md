@@ -19,6 +19,11 @@ cd server
 1. Install the required packages:
    ```
    pip install -r requirements.txt
+   python -m spacy download en
+   ```
+2. Install the required packages:
+   ```
+   pip install -r requirements.txt
    ```
 2. Run the server:
    ```
