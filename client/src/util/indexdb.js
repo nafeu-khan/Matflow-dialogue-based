@@ -1,5 +1,5 @@
 import Papa from "papaparse";
-import * as XLSX from "xlsx";
+// import * as XLSX from "xlsx";
 
 const fetchDataFromIndexedDB = (name) => {
   return new Promise((resolve, reject) => {

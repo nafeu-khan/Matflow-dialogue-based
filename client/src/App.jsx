@@ -15,6 +15,9 @@ import {
   AiOutlineAudioMuted,
 } from "react-icons/ai";
 import TTS from "./components/TTS";
+import FileModal from "./components/FilesModal/FileModal";
+import { csvNameContext } from "./util/csvNameContext";
+import DatasetDisplay from "./components/DatasetDisplay/DatasetDisplay";
 
 function App() {
   const [botText, setbotText] = useState("");
@@ -24,6 +27,9 @@ function App() {
   const [isCopied, setCopied] = useClipboard(textToCopy, {
     successDuration: 1000,
   });
+  localStorage.setItem("uploadedNames",JSON.stringify([""]))
+  const [csvNames,setcsvNames]=useState(JSON.parse(localStorage.getItem("uploadedNames")));
+
   useEffect(() => {
     if (userText) {
       async function fetchData() {
@@ -31,9 +37,12 @@ function App() {
           SpeechRecognition.stopListening();
           const response = await axios.post(
             "http://localhost:8000/api/recognize-speech/",
-            { text: userText }
+            { text: userText ,csvNames }
           );
-          setbotText(response.data.text);
+          console.log(response.data)
+          setbotText(response.data);
+        setcsvNames(JSON.parse(localStorage.getItem("uploadedNames")))
+            console.log("in eff",csvNames)
         } catch (error) {
           console.error(error);
         }
@@ -71,55 +80,22 @@ function App() {
 
     reader.readAsText(file);
   };
-  const storeDataInIndexedDB = async (data) => {
-    return new Promise((resolve, reject) => {
-      const request = indexedDB.open("MyDatabase", 1);
-
-      request.onupgradeneeded = (event) => {
-        const db = event.target.result;
-        const objectStore = db.createObjectStore("csvData", {
-          keyPath: "id",
-          autoIncrement: true,
-        });
-        objectStore.createIndex("data", "data", { unique: false });
-      };
-
-      request.onsuccess = (event) => {
-        const db = event.target.result;
-        const transaction = db.transaction("csvData", "readwrite");
-        const objectStore = transaction.objectStore("csvData");
-
-        data.forEach((item) => {
-          objectStore.add({ data: item });
-        });
-
-        transaction.oncomplete = () => {
-          db.close();
-          resolve("Data stored in IndexedDB!");
-        };
-
-        transaction.onerror = (error) => {
-          db.close();
-          reject(error);
-        };
-      };
-
-      request.onerror = (error) => {
-        reject(error);
-      };
-    });
-  };
 
   const handleSend = () => {
     setUserText(transcript);
     resetTranscript();
+    setcsvNames(JSON.parse(localStorage.getItem("uploadedFiles")))
     // TTS(botText); 
+    console.log("in app ",csvNames)
   };
 
   return (
     <>
       <div className="chat-container">
         <div className="chat-header">
+          <div style={{justifyContent:"right",textAlign: "left"}}>
+            <csvNameContext.Provider value={{csvNames,setcsvNames}}>< FileModal/></csvNameContext.Provider>
+          </div>
           <h2>Matflow</h2>
         </div>
         <div className="chat-messages" id="chatMessages">
@@ -139,8 +115,12 @@ function App() {
               className="message-content"
               onClick={() => setTextToCopy(transcript)}
             >
-              {botText} {/*//bot text*/}
+              {botText.text} {/*//bot text*/}
               {/* {transcript} */}
+              {console.log("main " ,csvNames,typeof(csvNames))}
+              {botText.action =="DatasetDisplay"&&
+              <DatasetDisplay csvNames={csvNames}/>
+              }
             </div>
           </div>
         </div>
