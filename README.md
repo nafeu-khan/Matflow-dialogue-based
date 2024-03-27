@@ -1,4 +1,3 @@
-Here is a sample README file for a Django project that receives API requests and sends responses:
 
 # Project Name
 ## Matflow dialogue based
@@ -37,8 +36,6 @@ cd client
    npm run dev
    ```
 
-. You can now send API requests to `http://localhost:8000/api/` using your preferred API client.
-
 ## API Endpoints
 
 The project has one endpoint that receives a request and returns a response:
@@ -61,7 +58,3 @@ The project has one endpoint that receives a request and returns a response:
 - Reactjs
 - vitejs
   
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
